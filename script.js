@@ -19,8 +19,9 @@ let button;
 let starttime;
 
 function setup() {
-  createCanvas(640 * 2, 480 * 2);
+  createCanvas(640 * 1.5, 480 * 1.5);
   capture = createVideo("video.mp4");
+  capture.autoplay(false);
   capture.loop();
   capture.hide();
   capture.size(width, height);
@@ -30,6 +31,10 @@ function setup() {
   button.mousePressed(toggleRec);
 }
 
+function mousePressed() {
+  capture.play();
+}
+
 function toggleRec() {
   capturing = !capturing;
   if(capturing) {
@@ -37,7 +42,7 @@ function toggleRec() {
   }
   else {
     console.log(JSON.stringify(poseArray));
-    save(JSON.stringify(poseArray), 'my.json');
+    save(JSON.parse(JSON.stringify(poseArray)), 'my.json');
     noLoop();
   }
 }
@@ -45,7 +50,7 @@ function toggleRec() {
 function draw() {
   stroke(255);
   strokeWeight(8);
-  image(capture, 0, 0, width * 2, height * 2);
+  image(capture, 0, 0, width * 1.5, height * 1.5);
   if (pose) {
     pose.forEach((pos, i) => {
       ellipse(pos.x, pos.y, 10, 10);
