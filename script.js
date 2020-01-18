@@ -19,7 +19,7 @@ let button;
 let starttime;
 
 function setup() {
-  createCanvas(640 * 1.5, 480 * 1.5);
+  createCanvas(640 * 1.5, 360 * 1.5);
   capture = createVideo("video.mp4");
   capture.autoplay(false);
   capture.loop();
