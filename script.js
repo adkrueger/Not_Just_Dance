@@ -10,6 +10,14 @@ let zero = {
 let pose;
 let skeleton;
 
+let poseArray = new Array();
+
+let capturing = false;
+
+let button;
+
+let starttime;
+
 function setup() {
   createCanvas(640 * 2, 480 * 2);
   capture = createVideo("video.mp4");
@@ -18,6 +26,20 @@ function setup() {
   capture.size(width, height);
   poseNet = ml5.poseNet(capture, modelLoaded);
   poseNet.on("pose", sendPoses);
+  button = createButton('click me');
+  button.mousePressed(toggleRec);
+}
+
+function toggleRec() {
+  capturing = !capturing;
+  if(capturing) {
+    console.log(capturing)
+  }
+  else {
+    console.log(JSON.stringify(poseArray));
+    save(JSON.stringify(poseArray), 'my.json');
+    noLoop();
+  }
 }
 
 function draw() {
@@ -48,6 +70,12 @@ function sendPoses(poses) {
 }
 
 function updatePose(inPose, inSkeleton) {
+  if(capturing) {
+    if(!starttime) {
+      starttime = millis();
+    }
+    poseArray.push([millis() - starttime, inPose]);
+  }
   let keypoints = inPose.keypoints;
   if (keypoints.length > 0) {
     if (!pose) {
