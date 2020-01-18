@@ -11,7 +11,7 @@ let pose;
 let skeleton;
 
 function setup() {
-  createCanvas(640, 480);
+  createCanvas(640 * 2, 480 * 2);
   capture = createVideo("video.mp4");
   capture.loop();
   capture.hide();
@@ -23,7 +23,7 @@ function setup() {
 function draw() {
   stroke(255);
   strokeWeight(8);
-  image(capture, 0, 0, width, height);
+  image(capture, 0, 0, width * 2, height * 2);
   if (pose) {
     pose.forEach((pos, i) => {
       ellipse(pos.x, pos.y, 10, 10);
