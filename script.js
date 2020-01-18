@@ -1,0 +1,72 @@
+let capture;
+let video;
+let poseNet;
+
+let zero = {
+  x: 0,
+  y: 0
+};
+
+let pose;
+let skeleton;
+
+function setup() {
+  createCanvas(640, 480);
+  capture = createCapture(VIDEO);
+  capture.hide();
+  poseNet = ml5.poseNet(capture, modelLoaded);
+  poseNet.on("pose", sendPoses);
+}
+
+function draw() {
+  image(capture, 0, 0);
+  stroke(255);
+  strokeWeight(4);
+  if (pose) {
+    pose.forEach((pos, i) => {
+      ellipse(pos.x, pos.y, 10, 10);
+    });
+  }
+  if (skeleton) {
+    skeleton.forEach((ske, i) => {
+      line(ske[0].x, ske[0].y, ske[1].x, ske[1].y);
+    });
+  }
+}
+
+
+function modelLoaded() {
+  console.log("Posenet Online");
+}
+
+function sendPoses(poses) {
+  updatePose(poses[0].pose, poses[0].skeleton);
+
+}
+
+function updatePose(inPose, inSkeleton) {
+  let keypoints = inPose.keypoints;
+  if (keypoints.length > 0) {
+    if (!pose) {
+      pose = new Array(keypoints.length).fill(
+        zero);
+    }
+    if (!skeleton ||
+      skeleton.length != inSkeleton.length) {
+      skeleton = new Array(inSkeleton.length).fill(
+        [zero, zero]);
+    }
+    pose.forEach((pos, i) => {
+      let newPos = keypoints[i].position;
+      pose[i] = {
+        x: lerp(newPos.x, pos.x, 0.1),
+        y: lerp(newPos.y, pos.y, 0.1)
+      };
+    });
+    skeleton.forEach((ske, i) => {
+      let first = inSkeleton[i][0].position;
+      let second = inSkeleton[i][1].position;
+      skeleton[i] = [first, second];
+    });
+  }
+}
