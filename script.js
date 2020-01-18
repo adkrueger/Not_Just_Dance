@@ -11,7 +11,7 @@ let pose;
 let skeleton;
 
 let options = {
- imageScaleFactor: 0.4,
+ imageScaleFactor: 0.5,
 }
 
 function setup() {
@@ -20,6 +20,7 @@ function setup() {
   capture.loop();
   capture.hide();
   capture.size(width, height);
+  capture.elt.muted = true;
   poseNet = ml5.poseNet(capture, options, modelLoaded);
   poseNet.on("pose", sendPoses);
 }
