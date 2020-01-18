@@ -27,6 +27,12 @@ function reCanvas() {
 function draw() {
   stroke(255);
   strokeWeight(8);
+  push();
+  translate(capture.width, 0);
+  //then scale it by -1 in the x-axis
+  //to flip the image
+  scale(-1, 1);
+  //draw video capture feed as image inside p5 canvas
   image(capture, 0, 0, width, height);
   if (pose) {
     pose.forEach((pos, i) => {
@@ -38,6 +44,7 @@ function draw() {
       line(ske[0].x, ske[0].y, ske[1].x, ske[1].y);
     });
   }
+  pop();
 }
 
 function modelLoaded() {
