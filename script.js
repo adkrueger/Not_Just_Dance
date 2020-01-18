@@ -10,12 +10,8 @@ let zero = {
 let pose;
 let skeleton;
 
-let options = {
- imageScaleFactor: 0.5,
-}
-
 function setup() {
-  createCanvas(640, 480);
+  createCanvas(640 * 2, 480 * 2);
   capture = createVideo("video.mp4");
   capture.loop();
   capture.hide();
