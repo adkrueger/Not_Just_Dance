@@ -13,13 +13,9 @@ let skeleton;
 function setup() {
   createCanvas(640 * 2, 480 * 2);
   capture = createVideo("video.mp4");
-  capture2 = createCapture(VIDEO);
-  capture2.hide();
   capture.loop();
   capture.hide();
   capture.size(width, height);
-  capture2.size(width, height);
-  capture.elt.muted = true;
   poseNet = ml5.poseNet(capture, modelLoaded);
   poseNet.on("pose", sendPoses);
 }
