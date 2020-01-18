@@ -19,11 +19,9 @@ function setup() {
 }
 
 function draw() {
-  push();
   translate(width,0);
   scale(-1, 1);
-  image(capture, 0, 0, 320, 240);
-  pop();
+  image(capture, 0, 0, width, height);
   stroke(255);
   strokeWeight(4);
   if (pose) {
