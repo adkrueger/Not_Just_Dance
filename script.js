@@ -11,7 +11,7 @@ let pose;
 let skeleton;
 
 function setup() {
-  createCanvas(640 * 2, 480 * 2);
+  createCanvas(640, 480);
   capture = createVideo("video.mp4");
   capture.loop();
   capture.hide();
