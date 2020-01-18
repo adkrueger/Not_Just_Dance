@@ -2,6 +2,9 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
+  color: #232323;
+  background: rgb(110,128,143);
+  background: linear-gradient(0deg, rgba(110,128,143,1) 0%, rgba(177,197,212,1) 100%);
 }
 canvas {
   display: block;
