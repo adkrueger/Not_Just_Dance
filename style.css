@@ -1,7 +1,24 @@
 html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
+  color: #232323;
+  background: rgb(187,99,136);
+  background: linear-gradient(0deg, rgba(187,99,136,1) 0%, rgba(191,223,225,1) 100%);
+  font-family: 'Titillium Web', sans-serif;
 }
 canvas {
   display: block;
+}
+
+#librarybtn {
+  transition: .2s;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 30px;
+}
+
+#librarybtn:hover {
+  transition: .3s;
+  color: floralwhite;
 }
