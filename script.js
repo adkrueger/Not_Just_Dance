@@ -10,20 +10,24 @@ let zero = {
 let pose;
 let skeleton;
 
+let options = {
+ imageScaleFactor: 0.4,
+}
+
 function setup() {
   createCanvas(640, 480);
-  capture = createCapture(VIDEO);
+  capture = createVideo("video.mp4");
+  capture.loop();
   capture.hide();
-  poseNet = ml5.poseNet(capture, modelLoaded);
+  capture.size(width, height);
+  poseNet = ml5.poseNet(capture, options, modelLoaded);
   poseNet.on("pose", sendPoses);
 }
 
 function draw() {
-  translate(width,0);
-  scale(-1, 1);
-  image(capture, 0, 0, width, height);
   stroke(255);
-  strokeWeight(4);
+  strokeWeight(8);
+  image(capture, 0, 0, width, height);
   if (pose) {
     pose.forEach((pos, i) => {
       ellipse(pos.x, pos.y, 10, 10);
@@ -42,8 +46,9 @@ function modelLoaded() {
 }
 
 function sendPoses(poses) {
-  updatePose(poses[0].pose, poses[0].skeleton);
-
+  if(poses.length > 0) {
+    updatePose(poses[0].pose, poses[0].skeleton);
+  }
 }
 
 function updatePose(inPose, inSkeleton) {
