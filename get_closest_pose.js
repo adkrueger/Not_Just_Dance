@@ -58,6 +58,4 @@ function binarySearch(arr, target, start, end){
     */
   }
 
-  
-
   get_closest_pose(6969);
