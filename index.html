@@ -1,12 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+	<title>Match This!</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
   <script src="https://unpkg.com/ml5@0.2.1/dist/ml5.min.js"></script>
   <link rel="stylesheet" type="text/css" href="style.css">
   <meta charset="utf-8" />
 </head>
 <body>
+	<p>hello hello, here is the form</p>
+	<form name="uploadVidSeg" method="post">
+		<span>Select a video to upload: </span> <input type="file" id="vidSegFile" name="vidSegFile">
+		<br />
+		<input class="button" name="uploadButton" type="button" value="Upload Video" disabled />
+	</form>
+	<div id="uploadDisplay"></div>
+
+	<script>
+      // When file is selected, stash base64 value in the encoding field.
+      function handleFileSelect(evt) {
+          console.log("in handlefileselect");
+          console.log(evt);
+          let files = evt.target.files;
+          if (files[0].size > 25000000) { // make as large or small as you need
+              alert("File size too large to use: " + files[0].size + " bytes");
+          } else {
+							let display = document.getElementById('uploadDisplay');
+              let vidURL = URL.createObjectURL(files[0]);
+							display.innerHTML = '<video width=\"320\" height=\"240\" controls>' +
+									'<source src=\"' + vidURL + '\" type=\"video/ogg\">' +
+									'<source src=\"' + vidURL + '\" type=\"video/mp4\">Video not supported.</video>';
+          }
+      }
+
+      // register
+      document.getElementById('vidSegFile').addEventListener('change', handleFileSelect, false);
+	</script>
+
+	<br/><br/><br/><br/><br/><br/><br/><br/>
   <script src="script.js"></script>
 </body>
 </html>
