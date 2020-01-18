@@ -10,17 +10,19 @@ let zero = {
 let pose;
 let skeleton;
 
+let scaleSize = 2;
+
 function setup() {
-  createCanvas(640, 360);
+  createCanvas(320 * scaleSize, 240 * scaleSize);
   capture = createCapture(VIDEO, reCanvas);
-  capture.autoplay(false);
+  capture.size(width, height);
   capture.hide();
   poseNet = ml5.poseNet(capture, modelLoaded);
   poseNet.on("pose", sendPoses);
 }
 
 function reCanvas() {
-  resizeCanvas(capture.width, capture.height);
+
 }
 
 
