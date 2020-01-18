@@ -24,7 +24,6 @@ function draw() {
   stroke(255);
   strokeWeight(8);
   image(capture, 0, 0, width, height);
-  image(capture2, 0, height, width, height);
   if (pose) {
     pose.forEach((pos, i) => {
       ellipse(pos.x, pos.y, 10, 10);
