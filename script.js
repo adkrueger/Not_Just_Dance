@@ -19,7 +19,7 @@ let button;
 let starttime;
 
 function setup() {
-  createCanvas(640 * 1.5, 360 * 1.5);
+  createCanvas(640 * 2, 360 * 2);
   capture = createVideo("video.mp4");
   capture.autoplay(false);
   capture.loop();
@@ -50,7 +50,7 @@ function toggleRec() {
 function draw() {
   stroke(255);
   strokeWeight(8);
-  image(capture, 0, 0, width * 1.5, height * 1.5);
+  image(capture, 0, 0, width * 2, height * 2);
   if (pose) {
     pose.forEach((pos, i) => {
       ellipse(pos.x, pos.y, 10, 10);
