@@ -13,6 +13,8 @@ let skeleton;
 function setup() {
   createCanvas(640 * 2, 480 * 2);
   capture = createVideo("video.mp4");
+  capture2 = createVideo(VIDEO);
+  capture2.hide();
   capture.loop();
   capture.hide();
   capture.size(width, height);
@@ -25,6 +27,7 @@ function draw() {
   stroke(255);
   strokeWeight(8);
   image(capture, 0, 0, width, height);
+  image(capture2, 0, height, width, height);
   if (pose) {
     pose.forEach((pos, i) => {
       ellipse(pos.x, pos.y, 10, 10);
