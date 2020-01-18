@@ -19,7 +19,7 @@ function setup() {
   capture.hide();
   capture.size(width, height);
   capture.elt.muted = true;
-  poseNet = ml5.poseNet(capture, options, modelLoaded);
+  poseNet = ml5.poseNet(capture, modelLoaded);
   poseNet.on("pose", sendPoses);
 }
 
