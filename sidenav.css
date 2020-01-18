@@ -1,13 +1,14 @@
 /* The side navigation menu */
 #mySidenav {
+    font-family: 'Titillium Web', sans-serif;
     height: 100%;
     width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    background: rgb(73,85,94);
-    background: linear-gradient(0deg, rgba(73,85,94,1) 0%, rgba(134,149,159,1) 100%);
+    background: rgb(103,120,133);
+    background: linear-gradient(0deg, rgba(103,120,133,1) 0%, rgba(191,211,225,1) 100%);
     padding-top: 40px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
     overflow: hidden;
@@ -39,7 +40,7 @@
     text-align: center;
     text-decoration: none;
     padding: 3px;
-    font-size: 25px;
+    font-size: 20px;
     color: #232323;
     display: block;
     transition: 0.3s;
@@ -50,7 +51,7 @@
     text-decoration: none;
     color: #232323;
     transition: 0.3s;
-    font-size: 30px;
+    font-size: 25px;
     margin-bottom: 5px;
     cursor: default;
 }
@@ -65,7 +66,7 @@
     position: absolute;
     top: 0;
     right: 25px;
-    font-size: 36px;
+    font-size: 31px;
     margin-left: 50px;
     text-decoration: none;
 }
