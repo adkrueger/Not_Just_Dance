@@ -13,7 +13,7 @@ let skeleton;
 function setup() {
   createCanvas(640 * 2, 480 * 2);
   capture = createVideo("video.mp4");
-  capture2 = createVideo(VIDEO);
+  capture2 = createCapture(VIDEO);
   capture2.hide();
   capture.loop();
   capture.hide();
