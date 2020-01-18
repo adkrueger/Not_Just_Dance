@@ -1,7 +1,9 @@
 //get closest taken pose in array, return everything after the number
 //json.parse
 
+/*
 
+*/
 
 
 
@@ -22,8 +24,10 @@ console.log(closest);
     .then(response => response.json())
     .then(json => console.log(json));
     
-    closest(json[n]);
+    n = closest(json[n]);
     
     const obj = JSON.parse(pose);
     console.log(obj);
   }
+
+  get_closest_pose(5, pose);
