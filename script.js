@@ -36,7 +36,6 @@ function draw() {
   }
 }
 
-
 function modelLoaded() {
   console.log("Posenet Online");
 }
