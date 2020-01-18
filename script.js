@@ -8,9 +8,25 @@ let zero = {
 };
 
 let pose;
-let skeleton;
 
-let scaleSize = 2;
+let characterPoints = new Array(17).fill(zero);
+
+let connected = [
+  [8,10],
+  [7,9],
+  [5,7],
+  [6,8],
+  [5,11],
+  [6,12],
+  [5,6],
+  [11,12],
+  [11,13],
+  [12,14],
+  [13,15],
+  [14,16]
+];
+
+let scaleSize = 2.5;
 
 function setup() {
   createCanvas(320 * scaleSize, 240 * scaleSize);
@@ -18,7 +34,7 @@ function setup() {
   capture.size(width, height);
   capture.hide();
   poseNet = ml5.poseNet(capture, modelLoaded);
-  poseNet.on("pose", sendPoses);
+  poseNet.on("pose", sendPoses);;
 }
 
 function reCanvas() {
@@ -36,6 +52,48 @@ function draw() {
   scale(-1, 1);
   //draw video capture feed as image inside p5 canvas
   image(capture, 0, 0, width, height);
+  //background(255);
+  if (pose) {
+    characterPoints.forEach((char, i) => {
+      let newPose = pose[i];
+      characterPoints[i] = {
+        x: lerp(char.x, newPose.x, 0.3),
+        y: lerp(char.y, newPose.y, 0.3)
+      }
+    });
+    let left = {
+      x: characterPoints[3].x,
+      y: characterPoints[3].y
+    };
+    let right = {
+      x: characterPoints[4].x,
+      y: characterPoints[4].y
+    };
+    let headPos = {
+      x: (left.x + right.x) / 2,
+      y: (left.y + right.y) / 2,
+    }
+    let dim = dist(left.x, left.y, right.x, right.y);
+    circle(headPos.x, headPos.y, dim);
+    fill(255, 0, 0);
+    beginShape();
+    vertex(characterPoints[5].x,  characterPoints[5].y);
+    vertex(characterPoints[6].x,  characterPoints[6].y);
+    vertex(characterPoints[12].x,  characterPoints[12].y);
+    vertex(characterPoints[11].x,  characterPoints[11].y);
+    endShape(CLOSE);
+    characterPoints.forEach((char, i) => {
+      let newPose = pose[i];
+      ellipse(characterPoints[i].x, characterPoints[i].y, 10, 10);
+    });
+    connected.forEach((arr, i) => {
+      line(characterPoints[arr[0]].x, characterPoints[arr[0]].y,
+        characterPoints[arr[1]].x, characterPoints[arr[1]].y);
+    });
+  }
+  pop();
+  /*
+  stroke(255,100,100);
   if (pose) {
     pose.forEach((pos, i) => {
       ellipse(pos.x, pos.y, 10, 10);
@@ -46,7 +104,7 @@ function draw() {
       line(ske[0].x, ske[0].y, ske[1].x, ske[1].y);
     });
   }
-  pop();
+  */
 }
 
 function modelLoaded() {
@@ -66,22 +124,8 @@ function updatePose(inPose, inSkeleton) {
       pose = new Array(keypoints.length).fill(
         zero);
     }
-    if (!skeleton ||
-      skeleton.length != inSkeleton.length) {
-      skeleton = new Array(inSkeleton.length).fill(
-        [zero, zero]);
-    }
     pose.forEach((pos, i) => {
-      let newPos = keypoints[i].position;
-      pose[i] = {
-        x: lerp(newPos.x, pos.x, 0.1),
-        y: lerp(newPos.y, pos.y, 0.1)
-      };
-    });
-    skeleton.forEach((ske, i) => {
-      let first = inSkeleton[i][0].position;
-      let second = inSkeleton[i][1].position;
-      skeleton[i] = [first, second];
+      pose[i] = keypoints[i].position;
     });
   }
 }
