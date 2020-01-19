@@ -1,7 +1,7 @@
-let capturing = false;
-let poseFile = new Array();
+let danceBoi;
 
 let playingFile = true;
+let total = 0;
 
 function downloadObjectAsJson(exportObj, exportName){
   var dataStr = "data:text/json;charset=utf-8,"
@@ -12,25 +12,6 @@ function downloadObjectAsJson(exportObj, exportName){
   document.body.appendChild(downloadAnchorNode); // required for firefox
   downloadAnchorNode.click();
   downloadAnchorNode.remove();
-}
-
-function toggleCapturing() {
-  if(!capturing) {
-    console.log("Starting in 3 seconds");
-  }
-  if(capturing) {
-    console.log("Stopping in 3 seconds");
-  }
-  setTimeout(() => {
-    if(!capturing) {
-      console.log("Capturing started");
-    }
-    if(capturing) {
-      console.log("Capturing stopped");
-      downloadObjectAsJson(poseFile, "danceMoves");
-    }
-    capturing = !capturing;
-  }, 3000);
 }
 
 window.onload = function() {
@@ -102,20 +83,45 @@ window.onload = function() {
         canvas2.height = videoHeight;
 
         let inDance = get_closest_pose(currTime - startTime);
-        if(inDance) {
+        if(inDance && danceBoi) {
           let dance = get_closest_pose(currTime - startTime)[1];
+          let you = angle_thing_that_works_sometimes(dance);
+          let me = angle_thing_that_works_sometimes(danceBoi);
+
+          total = 0;
+          you.forEach((l, i) => {
+            total += Math.abs(l - me[i]);
+          });
+          total = 100 - Math.round((total / 3.0) * 100);
           drawSkeleton(dance.keypoints, ctx2);
           drawKeypoints(dance.keypoints, ctx2);
+          let text = document.getElementById("timer");
+          setTimeout(() => text.innerHTML = " 3 ", 0);
+          setTimeout(() => text.innerHTML = " 2 ", 666);
+          setTimeout(() => text.innerHTML = " 1 ", 1333);
+          setTimeout(() => text.innerHTML = " POSE ", 2000);
+          setTimeout(() => {
+            if(total) {
+              let tmT = document.getElementById("score");
+              if(total > 30) {
+                tmT.innerHTML = "GOOD";
+              } else {
+                tmT.innerHTML = "BAD";
+              }
+            }
+            else {
+              let tmT = document.getElementById("score");
+              tmT.innerHTML = "BAD";
+            }
+          }, 2500)
         } else {
+          let text = document.getElementById("timer");
+          text.innerHTML = "START";
           startTime = currTime;
         }
-
-        let text = document.getElementById("timer");
-        setTimeout(framePose, 2750);
-        setTimeout(() => text.innerHTML = " 3 ", 0);
-        setTimeout(() => text.innerHTML = " 2 ", 666);
-        setTimeout(() => text.innerHTML = " 1 ", 1333);
-        setTimeout(() => text.innerHTML = " POSE ", 2000);
+        setTimeout(() => {
+          framePose();
+        }, 3500);
       }
     }
 
@@ -134,14 +140,7 @@ window.onload = function() {
       ctx.restore();
 
       if(all_poses.length > 0) {
-        if(capturing) {
-          const d = new Date();
-          const currTime = d.getTime();
-          if(startTime == 0) {
-            startTime = currTime;
-          }
-          poseFile.push([currTime - startTime,all_poses[0]]);
-        }
+        danceBoi = all_poses[0];
         drawSkeleton(all_poses[0].keypoints, ctx);
         drawKeypoints(all_poses[0].keypoints, ctx);
       }
