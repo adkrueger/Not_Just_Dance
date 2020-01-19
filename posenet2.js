@@ -109,15 +109,14 @@ window.onload = function() {
         } else {
           startTime = currTime;
         }
+
+        let text = document.getElementById("timer");
+        setTimeout(framePose, 2750);
+        setTimeout(() => text.innerHTML = " 3 ", 0);
+        setTimeout(() => text.innerHTML = " 2 ", 666);
+        setTimeout(() => text.innerHTML = " 1 ", 1333);
+        setTimeout(() => text.innerHTML = " POSE ", 2000);
       }
-
-      let text = document.getElementById("timer");
-      setTimeout(framePose, 3000);
-      setTimeout(() => text.innerHTML = " 3 ", 0);
-      setTimeout(() => text.innerHTML = " 2 ", 666);
-      setTimeout(() => text.innerHTML = " 1 ", 1333);
-      setTimeout(() => text.innerHTML = " POSE ", 2000);
-
     }
 
     async function poseDetectionFrame() {
@@ -155,7 +154,7 @@ window.onload = function() {
       */
 
       requestAnimationFrame(poseDetectionFrame);
-      //setTimeout(poseDetectionFrame, 2000);
+      //setTimeout(poseDetectionFrame, 1000);
     }
 
     poseDetectionFrame();
