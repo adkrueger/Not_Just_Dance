@@ -1,7 +1,7 @@
 let newJson;
 let newTimes;
 
-fetch("wholeDance.json")
+fetch("danceMoves.json")
     .then(response => response.json())
     .then((json) => {
         let times = new Array(json.length);
@@ -30,6 +30,8 @@ function binarySearch(arr, target, start, end) {
 }
 
 function get_closest_pose(n) {
+  console.log(n);
   let index = binarySearch(newTimes, n, 0, newTimes.length);
+  console.log(index);
   return newJson[index];
 }
