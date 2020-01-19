@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,3 +94,111 @@
 </div>
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Match This!</title>
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+	<script src="get_closest_pose.js" type="text/javascript"></script>
+	<script src="sidenav.js" type="text/javascript"></script>
+	<script src="drawing.js" type="text/javascript"></script>
+	<script src="posenet2.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="sidenav.css"/>
+  <link rel="stylesheet" type="text/css" href="style.css">
+	<link href="https://fonts.googleapis.com/css?family=Titillium+Web&display=swap" rel="stylesheet">
+	<meta charset="utf-8" />
+</head>
+
+<body>
+	<h1 id="timer" style="
+	position: absolute;
+	top: 0;
+	right: 200px;
+	font-size: 100px;
+	"> LOADING </h1>
+
+<div id="mySidenav">
+	<a class="closebtn" onclick="closeNav()">&times;</a>
+	<h3>Music Library</h3>
+	<hr/><br/>
+	<span>Arroz con Pollo</span>
+	<audio controls>
+		<source src='./music/3381-arroz-con-pollo-by-kevin-macleod.mp3' type='audio/mp3'>
+		Your browser does not support the audio tag.
+	</audio>
+	<br/>
+	<span>Ice Flow</span>
+	<audio controls>
+		<source src='./music/3898-ice-flow-by-kevin-macleod.mp3' type='audio/mp3'>
+		Your browser does not support the audio tag.
+	</audio>
+	<br/>
+	<span>The Show Must Be Go</span>
+	<audio controls>
+		<source src='./music/4509-the-show-must-be-go-by-kevin-macleod.mp3' type='audio/mp3'>
+		Your browser does not support the audio tag.
+	</audio>
+	<br/>
+	<span>Werq</span>
+	<audio controls>
+		<source src='./music/4616-werq-by-kevin-macleod.mp3' type='audio/mp3'>
+		Your browser does not support the audio tag.
+	</audio>
+	<br/>
+	<span>Captain Scurvy</span>
+	<audio controls>
+		<source src='./music/Captain%20Scurvy.mp3' type='audio/mp3'>
+		Your browser does not support the audio tag.
+	</audio>
+	<br/><br/>
+	<a id="creditslink" href="credits.html" style="font-size: 15px">Music Credits</a>
+</div>
+
+<div id="main">
+<!-- Use any element to open the sidenav -->
+	<p id="librarybtn" onclick="openNav()">&#9776; Music Library</p>
+	<br/><br/><br/><br/>
+	<p>hello hello, here is the form</p>
+	<form name="uploadVidSeg" method="post">
+		<span>Select a video to upload: </span> <input type="file" id="vidSegFile" name="vidSegFile">
+		<br />
+		<input class="button" name="uploadButton" type="button" value="Upload Video" disabled />
+	</form>
+	<button onclick="toggleCapturing()">Click me</button>
+	<div id="uploadDisplay"></div>
+
+	<script>
+      // When file is selected, stash base64 value in the encoding field.
+      function handleFileSelect(evt) {
+          console.log("in handlefileselect");
+          console.log(evt);
+          let files = evt.target.files;
+          if (files[0].size > 25000000) { // make as large or small as you need
+              alert("File size too large to use: " + files[0].size + " bytes");
+          } else {
+							let display = document.getElementById('uploadDisplay');
+              let vidURL = URL.createObjectURL(files[0]);
+							display.innerHTML = '<video width=\"320\" height=\"240\" controls>' +
+									'<source src=\"' + vidURL + '\" type=\"video/ogg\">' +
+									'<source src=\"' + vidURL + '\" type=\"video/mp4\">Video not supported.</video>';
+          }
+      }
+
+      // register
+      document.getElementById('vidSegFile').addEventListener('change', handleFileSelect, false);
+	</script>
+
+	<video id="video" playsinline style="display: none"></video>
+	<canvas id="output"></canvas>
+  <canvas id="output2" style="
+    position: absolute;
+    bottom: 0;
+    right: 0; ">
+	</canvas>
+
+</div>
+</body>
+</html>
+>>>>>>> captureVideoPose
