@@ -1,22 +1,26 @@
 let danceBoi;
 
-let playingFile = true;
+let playingFile = false;
+
 let total = 0;
 
-function downloadObjectAsJson(exportObj, exportName){
-  var dataStr = "data:text/json;charset=utf-8,"
-    + encodeURIComponent(JSON.stringify(exportObj));
-  var downloadAnchorNode = document.createElement('a');
-  downloadAnchorNode.setAttribute("href",     dataStr);
-  downloadAnchorNode.setAttribute("download", exportName + ".json");
-  document.body.appendChild(downloadAnchorNode); // required for firefox
-  downloadAnchorNode.click();
-  downloadAnchorNode.remove();
+let pose;
+
+let multi = false;
+
+function toggleMulti() {
+  multi = !multi;
 }
 
 window.onload = function() {
   const videoWidth = 600;
   const videoHeight = 500;
+
+  const canvas = document.getElementById('output');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = videoWidth;
+  canvas.height = videoHeight;
 
   let startTime = 0;
 
@@ -60,14 +64,9 @@ window.onload = function() {
 
   function detectPoseInRealTime(video, net) {
 
-    const canvas = document.getElementById('output');
-    const ctx = canvas.getContext('2d');
-
     const flipPoseHorizontal = true;
 
-    canvas.width = videoWidth;
-    canvas.height = videoHeight;
-
+    /*
     async function framePose() {
       if(playingFile) {
         const d = new Date();
@@ -90,11 +89,18 @@ window.onload = function() {
 
           total = 0;
           you.forEach((l, i) => {
-            total += Math.abs(l - me[i]);
+            let a = (l - me[i]) * (180/Math.PI);
+            a = (a + 180) % 360 - 180;
+            if(a) {
+              total += a;
+            }
           });
-          total = 100 - Math.round((total / 3.0) * 100);
+          total = Math.round((1440 - total) / 14);
+          let tmT = document.getElementById("score");
+          tmT.innerHTML = total;
           drawSkeleton(dance.keypoints, ctx2);
           drawKeypoints(dance.keypoints, ctx2);
+          /*
           let text = document.getElementById("timer");
           setTimeout(() => text.innerHTML = " 3 ", 0);
           setTimeout(() => text.innerHTML = " 2 ", 666);
@@ -122,28 +128,36 @@ window.onload = function() {
         setTimeout(() => {
           framePose();
         }, 3500);
+        }
+        else {
+          startTime = currTime;
+        }
+        //requestAnimationFrame(framePose);
       }
     }
+    */
 
     async function poseDetectionFrame() {
-      let all_poses = await net.estimatePoses(video, {
+      pose = await net.estimatePoses(video, {
         flipHorizontal: flipPoseHorizontal,
         decodingMethod: 'multi-person'
       });
 
-      ctx.clearRect(0, 0, videoWidth, videoHeight);
-
+      /*
       ctx.save();
       ctx.scale(-1, 1);
       ctx.translate(-videoWidth, 0);
       //ctx.drawImage(video, 0, 0, videoWidth, videoHeight);
       ctx.restore();
+      */
 
-      if(all_poses.length > 0) {
-        danceBoi = all_poses[0];
-        drawSkeleton(all_poses[0].keypoints, ctx);
-        drawKeypoints(all_poses[0].keypoints, ctx);
+      /*
+      if(pose.length > 0) {
+        danceBoi = pose[0];
+        drawSkeleton(pose[0].keypoints, ctx);
+        drawKeypoints(pose[0].keypoints, ctx);
       }
+      */
 
       /*
       all_poses.forEach(({score, keypoints}) => {
@@ -152,12 +166,29 @@ window.onload = function() {
       });
       */
 
-      requestAnimationFrame(poseDetectionFrame);
-      //setTimeout(poseDetectionFrame, 1000);
+      //requestAnimationFrame(poseDetectionFrame);
+      requestAnimationFrame(poseDetectionFrame());
+    }
+
+    function drawMe() {
+      ctx.clearRect(0, 0, videoWidth, videoHeight);
+      if(pose && pose.length > 0) {
+        //danceBoi = pose[0];
+        //drawSkeleton(pose[0].keypoints, ctx);
+        if(multi) {
+          pose.forEach((l, i) => {
+            drawKeypoints(l.keypoints, ctx, i, multi);
+          });
+        } else {
+          drawKeypoints(pose[0].keypoints, ctx, 1, multi);
+        }
+      }
+      requestAnimationFrame(drawMe);
     }
 
     poseDetectionFrame();
-    framePose();
+    //framePose();
+    drawMe();
   }
 
   async function bindPage() {

@@ -10,6 +10,8 @@ const elbowScale = 0.25;
 
 const wristScale = 0.2;
 
+let poseDraw = new Array(10).fill(0);
+
 let emote = new Image();
 emote.src = "head.png";
 
@@ -34,26 +36,46 @@ function drawPoint(ctx, y, x, r, color) {
   ctx.fill();
 }
 
-function drawKeypoints(keypoints, ctx, scale = 1) {
-  const leftEar = keypoints[3].position;
-  const rightEar = keypoints[4].position;
+function drawKeypoints(keypoints, ctx, r, multi, scale = 1) {
+  console.log(poseDraw[r]);
+  if(poseDraw[r] === 0) {
+    poseDraw[r] = keypoints;
+  }
+
+  if(multi) {
+    poseDraw[r] = keypoints;
+  } else {
+    poseDraw[r].forEach((l,i) => {
+      poseDraw[r][i].position = lerpPos(poseDraw[r][i].position, keypoints[i].position);
+    });
+  }
+
+  const leftEar = poseDraw[r][3].position;
+  const rightEar = poseDraw[r][4].position;
 
   const earDistance = Math.sqrt(Math.pow(leftEar.x - rightEar.x, 2) + Math.pow(leftEar.y - rightEar.y, 2));
 
   const centerX = (leftEar.x + rightEar.x) / 2;
   const centerY = (leftEar.y + rightEar.y) / 2;
 
-  const leftShoulder = keypoints[5].position;
-  const rightShoulder = keypoints[6].position;
+  const leftShoulder = poseDraw[r][5].position;
+  const rightShoulder = poseDraw[r][6].position;
 
   const angle = Math.atan2(rightEar.y - leftEar.y, rightEar.x - leftEar.x) * 180 / Math.PI;
 
   const d = earDistance;
 
-  const leftElbow = keypoints[7].position;
-  const rightElbow = keypoints[8].position;
-  const leftWrist = keypoints[9].position;
-  const rightWrist = keypoints[10].position;
+  const leftElbow = poseDraw[r][7].position;
+  const rightElbow = poseDraw[r][8].position;
+  const leftWrist = poseDraw[r][9].position;
+  const rightWrist = poseDraw[r][10].position;
+
+  const adjacentKeyPoints = posenet.getAdjacentKeyPoints(poseDraw[r]);
+  adjacentKeyPoints.forEach((keypoints) => {
+    drawSegment(
+        toTuple(keypoints[0].position), toTuple(keypoints[1].position), lineColor,
+        scale, ctx, earDistance);
+  });
 
   drawPoint(ctx, leftShoulder.y * scale, leftShoulder.x * scale, d * shoulderScale, shoulderColor);
   drawPoint(ctx, rightShoulder.y * scale, rightShoulder.x * scale, d * shoulderScale, shoulderColor);
@@ -79,6 +101,7 @@ function drawKeypoints(keypoints, ctx, scale = 1) {
 }
 
 function drawSkeleton(keypoints, ctx, scale = 1) {
+  /*
   const leftEar = keypoints[3].position;
   const rightEar = keypoints[4].position;
   const earDistance = Math.sqrt(Math.pow(leftEar.x - rightEar.x, 2) + Math.pow(leftEar.y - rightEar.y, 2));
@@ -89,4 +112,16 @@ function drawSkeleton(keypoints, ctx, scale = 1) {
         toTuple(keypoints[0].position), toTuple(keypoints[1].position), lineColor,
         scale, ctx, earDistance);
   });
+  */
+}
+
+function lerpPos (start, end) {
+  return {
+    x: lerp(start.x, end.x, 0.1),
+    y: lerp(start.y, end.y, 0.1)
+  }
+}
+
+function lerp (start, end, amt){
+  return (1-amt)*start+amt*end
 }

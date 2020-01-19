@@ -16,18 +16,6 @@
 </head>
 
 <body>
-	<h1 id="timer" style="
-	position: absolute;
-	top: 0;
-	right: 200px;
-	font-size: 100px;
-	"> LOADING </h1>
-	<h1 id="score" style="
-	position: absolute;
-	top: 0;
-	right: 750px;
-	font-size: 100px;
-	"> 0 </h1>
 
 <div id="mySidenav">
 	<a class="closebtn" onclick="closeNav()">&times;</a>
@@ -68,13 +56,22 @@
 
 <div id="main">
 <!-- Use any element to open the sidenav -->
+	<button onclick="toggleMulti()" style="
+		position: absolute;
+		left: 20px;
+		bottom: 20px;
+		font-size: 50px;
+	">Toggle Multi</button>
 	<p id="librarybtn" onclick="openNav()">&#9776; Music Library</p>
-
 	<video id="video" playsinline style="display: none"></video>
 	<canvas id="output" style="
     position: absolute;
-    bottom: 0;
-    left: 0; ">
+		height: 100%;
+    left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		margin: 0 auto; ">
 	</canvas>
   <canvas id="output2" style="
     position: absolute;
