@@ -3,15 +3,14 @@
     font-family: 'Titillium Web', sans-serif;
     height: 100%;
     width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
     background: rgb(103,120,133);
     background: linear-gradient(0deg, rgba(103,120,133,1) 0%, rgba(191,211,225,1) 100%);
-    padding-top: 40px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-    overflow: hidden;
+    overflow: auto;
+    position: absolute;
 }
 
 #mySidenav hr {
@@ -81,4 +80,8 @@
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
+}
+
+#creditslink {
+    padding-bottom: 20px;
 }
