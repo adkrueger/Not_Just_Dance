@@ -6,6 +6,7 @@ html, body {
   background: rgb(187,99,136);
   background: linear-gradient(0deg, rgba(187,99,136,1) 0%, rgba(191,223,225,1) 100%);
   font-family: 'Titillium Web', sans-serif;
+  overflow: hidden;
 }
 canvas {
   display: block;
@@ -16,6 +17,8 @@ canvas {
   cursor: pointer;
   text-decoration: none;
   font-size: 30px;
+  clear: both;
+  float: left;
 }
 
 #librarybtn:hover {
