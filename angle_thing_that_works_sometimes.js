@@ -1,105 +1,55 @@
-function angle_thing_that_works_sometimes(n) {
-
+function angle_thing_that_works_sometimes(jsonFile) {
+    console.log('HELLO HELLO\n');
     fetch("singlePose.json")
         .then(response => response.json())
         .then((json) => {
             console.log(json);
-            let Mx = ((json[1].keypoints[1].position.x+json[1].keypoints[2].position.x+json[1].keypoints[3].
-                position.x+
-                json[1].keypoints[4].position.x+json[1].keypoints[5].position.x+json[1].keypoints[6].position.x+
-                json[1].keypoints[7].position.x+json[1].keypoints[8].position.x+json[1].keypoints[9].position.x+
-                json[1].keypoints[10].position.x+json[1].keypoints[11].position.x+json[1].keypoints[12].position.x+
-                json[1].keypoints[13].position.x+json[1].keypoints[14].position.x+json[1].keypoints[15].position.x+
-                json[1].keypoints[16].position.x)/16);
+            console.log(json[1]);
+            let keypoints = json[1].keypoints;
+            console.log(keypoints);
+
+            let Mx = ((keypoints[1].position.x+keypoints[2].position.x+keypoints[3].position.x+
+                keypoints[4].position.x+keypoints[5].position.x+keypoints[6].position.x+
+                keypoints[7].position.x+keypoints[8].position.x+keypoints[9].position.x+
+                keypoints[10].position.x+keypoints[11].position.x+keypoints[12].position.x+
+                keypoints[13].position.x+keypoints[14].position.x+keypoints[15].position.x+
+                keypoints[16].position.x)/16);
             console.log(Mx);
 
-            let My = ((json[1].keypoints[1].position.y+json[1].keypoints[2].position.y+json[1].keypoints[3].
-                position.y+
-                json[1].keypoints[4].position.y+json[1].keypoints[5].position.y+json[1].keypoints[6].position.y+
-                json[1].keypoints[7].position.y+json[1].keypoints[8].position.y+json[1].keypoints[9].position.y+
-                json[1].keypoints[10].position.y+json[1].keypoints[11].position.y+json[1].keypoints[12].position.y+
-                json[1].keypoints[13].position.y+json[1].keypoints[14].position.y+json[1].keypoints[15].position.y+
-                json[1].keypoints[16].position.y)/16);
+            let My = ((keypoints[1].position.y+keypoints[2].position.y+keypoints[3].position.y+
+                keypoints[4].position.y+keypoints[5].position.y+keypoints[6].position.y+
+                keypoints[7].position.y+keypoints[8].position.y+keypoints[9].position.y+
+                keypoints[10].position.y+keypoints[11].position.y+keypoints[12].position.y+
+                keypoints[13].position.y+keypoints[14].position.y+keypoints[15].position.y+
+                keypoints[16].position.y)/16);
             console.log(My);
-            
-            
-            let LSHLEL = Math.acos((2*(My)^2 + 2*(Mx)^2 - 2*(Mx)*(json[1].keypoints[5].position.x) - 2*(Mx)*(json[1].keypoints[7].position.x)
-             - 4*(My)*(json[1].keypoints[5].position.y) + 2*(json[1].keypoints[5].position.x)*(xjson[1].keypoints[7].position.x) 
-            + 2*(json[1].keypoints[5].position.y)*(json[1].keypoints[7].position.y) + (json[1].keypoints[5].position.y)^2 
-            - (json[1].keypoints[7].position.y)^2)/2*(math.sqrt(((json[1].keypoints[5].position.x)^2 + (json[1].keypoints[5].position.y)^2 - 
-            2*(Mx)*(json[1].keypoints[5].position.x) - 2*(My)*(json[1].keypoints[5].position.y) + (Mx)^2 + (My)^2)((json[1].keypoints[7].position.x)^2 
-            + (json[1].keypoints[5].position.y)^2 - 2*(Mx)*(json[1].keypoints[7].position.x) - 2*(My)*(json[1].keypoints[5].position.y)
-             + (Mx)^2 + (My)^2))))
 
-             let RSHREL = Math.acos((2*(My)^2 + 2*(Mx)^2 - 2*(Mx)*(json[1].keypoints[6].position.x) - 2*(Mx)*(json[1].keypoints[8].position.x)
-             - 4*(My)*(json[1].keypoints[6].position.y) + 2*(json[1].keypoints[6].position.x)*(xjson[1].keypoints[8].position.x) 
-            + 2*(json[1].keypoints[6].position.y)*(json[1].keypoints[8].position.y) + (json[1].keypoints[6].position.y)^2 
-            - (json[1].keypoints[8].position.y)^2)/2*(math.sqrt(((json[1].keypoints[6].position.x)^2 + (json[1].keypoints[6].position.y)^2 - 
-            2*(Mx)*(json[1].keypoints[6].position.x) - 2*(My)*(json[1].keypoints[6].position.y) + (Mx)^2 + (My)^2)((json[1].keypoints[8].position.x)^2 
-            + (json[1].keypoints[6].position.y)^2 - 2*(Mx)*(json[1].keypoints[8].position.x) - 2*(My)*(json[1].keypoints[6].position.y)
-             + (Mx)^2 + (My)^2))))   
+            let finalArr = [];
+            finalArr.push(big_calculate(Mx, My, 5, 7, keypoints));
+            finalArr.push(big_calculate(Mx, My, 6, 8, keypoints));
+            finalArr.push(big_calculate(Mx, My, 7, 9, keypoints));
+            finalArr.push(big_calculate(Mx, My, 8, 10, keypoints));
+            finalArr.push(big_calculate(Mx, My, 11, 13, keypoints));
+            finalArr.push(big_calculate(Mx, My, 12, 14, keypoints));
+            finalArr.push(big_calculate(Mx, My, 13, 15, keypoints));
+            finalArr.push(big_calculate(Mx, My, 14, 16, keypoints));
+            console.log(finalArr);
+            return finalArr;
 
-             let LELLWR = Math.acos((2*(My)^2 + 2*(Mx)^2 - 2*(Mx)*(json[1].keypoints[7].position.x) - 2*(Mx)*(json[1].keypoints[9].position.x)
-             - 4*(My)*(json[1].keypoints[7].position.y) + 2*(json[1].keypoints[7].position.x)*(xjson[1].keypoints[9].position.x) 
-            + 2*(json[1].keypoints[7].position.y)*(json[1].keypoints[9].position.y) + (json[1].keypoints[7].position.y)^2 
-            - (json[1].keypoints[9].position.y)^2)/2*(math.sqrt(((json[1].keypoints[7].position.x)^2 + (json[1].keypoints[7].position.y)^2 - 
-            2*(Mx)*(json[1].keypoints[7].position.x) - 2*(My)*(json[1].keypoints[7].position.y) + (Mx)^2 + (My)^2)((json[1].keypoints[9].position.x)^2 
-            + (json[1].keypoints[7].position.y)^2 - 2*(Mx)*(json[1].keypoints[9].position.x) - 2*(My)*(json[1].keypoints[7].position.y)
-             + (Mx)^2 + (My)^2)))) 
-
-             let RELRWR = Math.acos((2*(My)^2 + 2*(Mx)^2 - 2*(Mx)*(json[1].keypoints[8].position.x) - 2*(Mx)*(json[1].keypoints[10].position.x)
-             - 4*(My)*(json[1].keypoints[8].position.y) + 2*(json[1].keypoints[8].position.x)*(xjson[1].keypoints[10].position.x) 
-            + 2*(json[1].keypoints[8].position.y)*(json[1].keypoints[10].position.y) + (json[1].keypoints[8].position.y)^2 
-            - (json[1].keypoints[10].position.y)^2)/2*(math.sqrt(((json[1].keypoints[8].position.x)^2 + (json[1].keypoints[8].position.y)^2 - 
-            2*(Mx)*(json[1].keypoints[8].position.x) - 2*(My)*(json[1].keypoints[8].position.y) + (Mx)^2 + (My)^2)((json[1].keypoints[10].position.x)^2 
-            + (json[1].keypoints[8].position.y)^2 - 2*(Mx)*(json[1].keypoints[10].position.x) - 2*(My)*(json[1].keypoints[8].position.y)
-             + (Mx)^2 + (My)^2)))) 
-
-             let LHILKN = Math.acos((2*(My)^2 + 2*(Mx)^2 - 2*(Mx)*(json[1].keypoints[11].position.x) - 2*(Mx)*(json[1].keypoints[13].position.x)
-             - 4*(My)*(json[1].keypoints[11].position.y) + 2*(json[1].keypoints[11].position.x)*(xjson[1].keypoints[13].position.x) 
-            + 2*(json[1].keypoints[11].position.y)*(json[1].keypoints[13].position.y) + (json[1].keypoints[11].position.y)^2 
-            - (json[1].keypoints[13].position.y)^2)/2*(math.sqrt(((json[1].keypoints[11].position.x)^2 + (json[1].keypoints[11].position.y)^2 - 
-            2*(Mx)*(json[1].keypoints[11].position.x) - 2*(My)*(json[1].keypoints[11].position.y) + (Mx)^2 + (My)^2)((json[1].keypoints[13].position.x)^2 
-            + (json[1].keypoints[11].position.y)^2 - 2*(Mx)*(json[1].keypoints[13].position.x) - 2*(My)*(json[1].keypoints[11].position.y)
-             + (Mx)^2 + (My)^2))))
-
-             let RHIRKN = Math.acos((2*(My)^2 + 2*(Mx)^2 - 2*(Mx)*(json[1].keypoints[12].position.x) - 2*(Mx)*(json[1].keypoints[14].position.x)
-             - 4*(My)*(json[1].keypoints[12].position.y) + 2*(json[1].keypoints[12].position.x)*(xjson[1].keypoints[14].position.x) 
-            + 2*(json[1].keypoints[12].position.y)*(json[1].keypoints[14].position.y) + (json[1].keypoints[12].position.y)^2 
-            - (json[1].keypoints[14].position.y)^2)/2*(math.sqrt(((json[1].keypoints[12].position.x)^2 + (json[1].keypoints[12].position.y)^2 - 
-            2*(Mx)*(json[1].keypoints[12].position.x) - 2*(My)*(json[1].keypoints[12].position.y) + (Mx)^2 + (My)^2)((json[1].keypoints[14].position.x)^2 
-            + (json[1].keypoints[12].position.y)^2 - 2*(Mx)*(json[1].keypoints[14].position.x) - 2*(My)*(json[1].keypoints[12].position.y)
-             + (Mx)^2 + (My)^2))))
-
-             let LKNLAN = Math.acos((2*(My)^2 + 2*(Mx)^2 - 2*(Mx)*(json[1].keypoints[13].position.x) - 2*(Mx)*(json[1].keypoints[15].position.x)
-             - 4*(My)*(json[1].keypoints[13].position.y) + 2*(json[1].keypoints[13].position.x)*(xjson[1].keypoints[15].position.x) 
-            + 2*(json[1].keypoints[13].position.y)*(json[1].keypoints[15].position.y) + (json[1].keypoints[13].position.y)^2 
-            - (json[1].keypoints[15].position.y)^2)/2*(math.sqrt(((json[1].keypoints[13].position.x)^2 + (json[1].keypoints[13].position.y)^2 - 
-            2*(Mx)*(json[1].keypoints[13].position.x) - 2*(My)*(json[1].keypoints[13].position.y) + (Mx)^2 + (My)^2)((json[1].keypoints[15].position.x)^2 
-            + (json[1].keypoints[13].position.y)^2 - 2*(Mx)*(json[1].keypoints[15].position.x) - 2*(My)*(json[1].keypoints[13].position.y)
-             + (Mx)^2 + (My)^2))))
-
-             let RKNRAN = Math.acos((2*(My)^2 + 2*(Mx)^2 - 2*(Mx)*(json[1].keypoints[14].position.x) - 2*(Mx)*(json[1].keypoints[16].position.x)
-             - 4*(My)*(json[1].keypoints[14].position.y) + 2*(json[1].keypoints[14].position.x)*(xjson[1].keypoints[16].position.x) 
-            + 2*(json[1].keypoints[14].position.y)*(json[1].keypoints[16].position.y) + (json[1].keypoints[14].position.y)^2 
-            - (json[1].keypoints[16].position.y)^2)/2*(math.sqrt(((json[1].keypoints[14].position.x)^2 + (json[1].keypoints[14].position.y)^2 - 
-            2*(Mx)*(json[1].keypoints[14].position.x) - 2*(My)*(json[1].keypoints[14].position.y) + (Mx)^2 + (My)^2)((json[1].keypoints[16].position.x)^2 
-            + (json[1].keypoints[14].position.y)^2 - 2*(Mx)*(json[1].keypoints[16].position.x) - 2*(My)*(json[1].keypoints[14].position.y)
-             + (Mx)^2 + (My)^2))))
-
-
-
-            //abs((youtube-player/8))
-
-
-
-            json.forEach((arr, i) => {
-                times[i] = arr[0];
-            });
-
-            let closestIndex = binarySearch(times, n, 0, times.length);
-            console.log(json[closestIndex]);
         });
 }
 
-function angle_thing_that_works_sometimes(json);
+function big_calculate(Mx, My, pos1, pos2, keypoints) {
+    let num = (2*Math.pow(My,2) + 2*Math.pow(Mx,2) - 2*(Mx)*(keypoints[pos1].position.x) - 2*(Mx)*(keypoints[pos2].position.x)
+        - 4*(My)*(keypoints[pos1].position.y) + 2*(keypoints[pos1].position.x)*(keypoints[pos2].position.x)
+        + 2*(keypoints[pos1].position.y)*(keypoints[pos2].position.y) + Math.pow((keypoints[pos1].position.y), 2)
+        - Math.pow((keypoints[pos2].position.y), 2));
+    let denom = Math.sqrt(Math.abs((Math.pow((keypoints[pos1].position.x), 2) + Math.pow((keypoints[pos1].position.y), 2) -
+        2*(Mx)*(keypoints[pos1].position.x) - 2*(My)*(keypoints[pos1].position.y) + Math.pow(Mx,2) + Math.pow(My,2))*(Math.pow((keypoints[pos2].position.x), 2)
+        + Math.pow((keypoints[pos1].position.y), 2) - 2*(Mx)*(keypoints[pos2].position.x) - 2*(My)*(keypoints[pos1].position.y)
+        + Math.pow(Mx,2) + Math.pow(My,2))));
+    let outcome = Math.acos(num/(2*denom));
+
+    console.log(outcome);
+    return outcome === undefined ? -1 : outcome;
+}
