@@ -31,6 +31,5 @@ function binarySearch(arr, target, start, end) {
 
 function get_closest_pose(n) {
   let index = binarySearch(newTimes, n, 0, newTimes.length);
-  console.log(index);
   return newJson[index];
 }

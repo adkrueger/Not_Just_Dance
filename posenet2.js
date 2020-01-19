@@ -81,6 +81,8 @@ window.onload = function() {
         drawKeypoints(keypoints, ctx);
       });
 
+      /*
+
       const canvas2 = document.getElementById('output2');
       const ctx2 = canvas2.getContext('2d');
 
@@ -90,9 +92,10 @@ window.onload = function() {
       d = new Date();
       let closestTime = d.getTime() - startTime;
       dance = get_closest_pose(closestTime)[1];
-      console.log(dance);
       drawSkeleton(dance.keypoints, ctx2);
       drawKeypoints(dance.keypoints, ctx2);
+
+      */
 
       requestAnimationFrame(poseDetectionFrame);
     }
