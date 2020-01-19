@@ -1,10 +1,24 @@
+let newJson;
+let newTimes;
+
+fetch("wholeDance.json")
+    .then(response => response.json())
+    .then((json) => {
+        let times = new Array(json.length);
+        newJson = json;
+        newJson.forEach((arr, i) => {
+            times[i] = arr[0];
+        });
+        newTimes = times;
+    });
+
 function binarySearch(arr, target, start, end) {
     let midpoint = Math.floor((start + end) / 2);
 
     if (arr[midpoint] === target) {
         return midpoint;
     }
-    if (start > end) {
+    if (end < start) {
         return midpoint;
     }
 
@@ -16,25 +30,7 @@ function binarySearch(arr, target, start, end) {
 }
 
 function get_closest_pose(n) {
-    fetch("wholeDance.json")
-        .then(response => response.json())
-        .then((json) => {
-            console.log(json);
-            let times = new Array(json.length);
-            json.forEach((arr, i) => {
-                times[i] = arr[0];
-            });
-            let closestIndex = binarySearch(times, n, 0, times.length);
-            console.log(json[closestIndex]);
-        });
-
-    /*
-    
-    n = closest(json[n]);
-    
-    const obj = JSON.parse(pose);
-    console.log(obj);
-    */
+  let index = binarySearch(newTimes, n, 0, newTimes.length);
+  console.log(index);
+  return newJson[index];
 }
-
-get_closest_pose(6969);

@@ -2,6 +2,10 @@ window.onload = function() {
   const videoWidth = 600;
   const videoHeight = 500;
 
+  let startTime = 0;
+
+  let d = new Date();
+
   async function setupCamera() {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       throw new Error(
@@ -39,6 +43,9 @@ window.onload = function() {
   }
 
   function detectPoseInRealTime(video, net) {
+    if(startTime == 0) {
+      startTime = d.getTime();
+    }
     const canvas = document.getElementById('output');
     const ctx = canvas.getContext('2d');
 
@@ -53,11 +60,7 @@ window.onload = function() {
         decodingMethod: 'multi-person'
       });
 
-      console.log(all_poses);
-
       ctx.clearRect(0, 0, videoWidth, videoHeight);
-      ctx.fillStyle = "black";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.save();
       ctx.scale(-1, 1);
@@ -78,6 +81,18 @@ window.onload = function() {
         drawKeypoints(keypoints, ctx);
       });
 
+      const canvas2 = document.getElementById('output2');
+      const ctx2 = canvas2.getContext('2d');
+
+      canvas2.width = videoWidth * 2;
+      canvas2.height = videoHeight * 2;
+
+      d = new Date();
+      let closestTime = d.getTime() - startTime;
+      dance = get_closest_pose(closestTime)[1];
+      console.log(dance);
+      drawSkeleton(dance.keypoints, ctx2);
+      drawKeypoints(dance.keypoints, ctx2);
 
       requestAnimationFrame(poseDetectionFrame);
     }
